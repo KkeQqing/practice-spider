@@ -1,0 +1,32 @@
+# 1. IDE 配置文件（必须忽略）
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 2. Python 编译缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+
+# 3. 虚拟环境（绝对不能上传！）
+venv/
+env/
+.venv/
+ENV/
+*/envs/*
+
+# 4. Jupyter Notebook
+.ipynb_checkpoints/
+
+# 5. 日志和临时文件
+*.log
+logs/
+temp/
+tmp/
+
+# 6. 操作系统文件
+.DS_Store          # macOS
+Thumbs.db          # Windows
