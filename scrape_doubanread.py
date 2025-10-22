@@ -1,3 +1,4 @@
+import requests
 from bs4 import BeautifulSoup
 from safe_requests import safe_get
 
@@ -15,3 +16,5 @@ for star_num in range(0, 250, 25):
             print(book_name)
     else:
         print("请求失败:", response["error"])
+
+
