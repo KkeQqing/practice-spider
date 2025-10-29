@@ -1,3 +1,5 @@
+import requests
+
 from safe_requests import safe_post
 
 url_sougouTranslate = "https://fanyi.sogou.com/reventondc/suggV3"
@@ -12,4 +14,14 @@ data ={
     "addSugg":"on"
 }
 res_sougouTranslate = safe_post(url_sougouTranslate, data=data, return_json=True)
-print(res_sougouTranslate["data"])
+if res_sougouTranslate['success']:
+    result = res_sougouTranslate['data']
+    if 'sugg' in result:
+        sugg_list = result['sugg']
+        print("翻译建议：")
+        for item in sugg_list:
+            print(f"{item['k']}: {item['v']}")
+    else:
+        print("响应中没有 'sugg' 字段")
+else:
+    print("请求失败:", res_sougouTranslate['error'])
