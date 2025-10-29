@@ -1,4 +1,5 @@
 import requests
+from requests import session
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import time
@@ -102,3 +103,90 @@ def safe_get(url,
         'data': None,
         'error': error_msg
     }
+
+def safe_post(  url,
+                data=None,
+                jason=None,
+                headers=None,
+                timeout=10,
+                max_retries=2,
+                backoff_factor=1,
+                return_json=False):
+    """
+        安全地发送 POST 请求，自动处理异常、重试和超时。
+
+        参数:
+            url (str): 目标 URL
+            headers (dict, optional): 请求头，默认包含 User-Agent
+            timeout (int or tuple): 超时时间（秒），默认 10
+            max_retries (int): 失败后最大重试次数，默认 2 次（共尝试 3 次）
+            backoff_factor (float): 重试间隔指数退避因子，默认 1 秒
+            return_json (bool): 是否尝试返回 JSON 数据（若响应是 JSON）
+
+        返回:
+            dict: 包含以下字段
+                - success (bool): 是否成功
+                - response (requests.Response or None): 响应对象（成功时）
+                - data (str or dict or None): 响应文本或 JSON 数据
+                - error (str or None): 错误信息（失败时）
+    """
+    default_headers = BROWSER_HEADERS
+    if headers :
+        default_headers.update(headers)
+    headers = default_headers
+
+    # 配置重试策略：对 5xx 和连接错误重试
+    retry_strategy = Retry(
+        total=max_retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=[500, 502, 503, 504],  # 服务器错误时重试
+        allowed_methods=["HEAD", "GET", "OPTIONS"]  # 只对幂等方法重试
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy) # 创建适配器
+    session = requests.Session() # 创建会话
+    session.mount("http://", adapter) # 将适配器添加到会话中
+    session.mount("https://", adapter) # 将适配器添加到会话中
+
+    try:
+        response = session.get(url, headers=headers, timeout=timeout)
+        data = None
+        if return_json:
+            try:
+                data = response.json()
+            except ValueError:
+                return {
+                    'success': False,
+                    'response': None,
+                    'data': None,
+                    'error': '响应不是有效的 JSON'
+                }
+        else:
+            data = response.text
+
+        return {
+            'success': True,
+            'response': response,
+            'data': data,
+            'error': None
+        }
+
+    except requests.exceptions.Timeout:
+        error_msg = f"请求超时（超过 {timeout} 秒）"
+    except requests.exceptions.ConnectionError:
+        error_msg = "网络连接错误（DNS失败、拒绝连接等）"
+    except requests.exceptions.HTTPError as e:
+        error_msg = f"HTTP错误: {e}"
+    except requests.exceptions.TooManyRedirects:
+        error_msg = "重定向次数过多"
+    except requests.exceptions.RequestException as e:
+        error_msg = f"未知请求错误: {e}"
+
+    return {
+        'success': False,
+        'response': None,
+        'data': None,
+        'error': error_msg
+    }
+
+
+

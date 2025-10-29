@@ -1,1 +1,3 @@
-爬取豆瓣读书排名前250的书籍名
+scrape_doubanread:爬取豆瓣读书排名前250的书籍名
+
+scrape_sougouTranslate:向搜狗翻译传输数据并接收
