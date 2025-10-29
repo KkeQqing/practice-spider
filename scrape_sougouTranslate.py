@@ -13,7 +13,9 @@ data ={
     "pid":"sogou-dict-vr",
     "addSugg":"on"
 }
+
 res_sougouTranslate = safe_post(url_sougouTranslate, data=data, return_json=True)
+
 if res_sougouTranslate['success']:
     result = res_sougouTranslate['data']
     if 'sugg' in result:
