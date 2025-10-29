@@ -106,7 +106,7 @@ def safe_get(url,
 
 def safe_post(  url,
                 data=None,
-                jason=None,
+                json=None,
                 headers=None,
                 timeout=10,
                 max_retries=2,
@@ -148,7 +148,7 @@ def safe_post(  url,
     session.mount("https://", adapter) # 将适配器添加到会话中
 
     try:
-        response = session.get(url, headers=headers, timeout=timeout)
+        response = session.post(url,data=data, json=json,  headers=headers, timeout=timeout)
         data = None
         if return_json:
             try:
