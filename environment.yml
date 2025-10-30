@@ -1,5 +1,6 @@
 name: first-spider
 channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
   - conda-forge
   - defaults
 dependencies:
@@ -14,14 +15,17 @@ dependencies:
   - certifi=2025.10.5=py313haa95532_0
   - cffi=2.0.0=py313h02ab6af_0
   - charset-normalizer=3.3.2=pyhd3eb1b0_0
+  - exceptiongroup=1.3.0=pyhd8ed1ab_0
   - expat=2.7.1=h8ddb27b_0
   - frozenlist=1.7.0=py313h0c48a3b_0
+  - h11=0.16.0=pyhd8ed1ab_0
   - idna=3.7=py313haa95532_0
   - libffi=3.4.4=hd77b12b_1
   - libmpdec=4.0.0=h827c3e9_0
   - libzlib=1.3.1=h02ab6af_0
   - multidict=6.6.3=py313hd650c13_0
   - openssl=3.5.4=h725018a_0
+  - outcome=1.3.0.post0=pyhd8ed1ab_1
   - pip=25.2=pyhc872135_0
   - propcache=0.3.1=py313hb4c8b1a_0
   - pycparser=2.23=py313haa95532_0
@@ -29,10 +33,16 @@ dependencies:
   - python=3.13.7=h260b955_100_cp313
   - python_abi=3.13=1_cp313
   - requests=2.32.5=py313haa95532_0
+  - selenium=4.38.0=pyhcf101f3_0
+  - selenium-manager=4.38.0=h18a1a76_0
   - setuptools=80.9.0=py313haa95532_0
+  - sniffio=1.3.1=pyhd8ed1ab_1
+  - sortedcontainers=2.4.0=pyhd8ed1ab_1
   - soupsieve=2.5=py313haa95532_0
   - sqlite=3.50.2=hda9a48d_1
   - tk=8.6.15=hf199647_0
+  - trio=0.31.0=py313h3a11399_0
+  - trio-websocket=0.12.2=pyh29332c3_0
   - typing-extensions=4.15.0=py313haa95532_0
   - typing_extensions=4.15.0=py313haa95532_0
   - tzdata=2025b=h04d1e81_0
@@ -41,9 +51,15 @@ dependencies:
   - vc=14.3=h2df5915_10
   - vc14_runtime=14.44.35208=h4927774_10
   - vs2015_runtime=14.44.35208=ha6b5a95_10
+  - websocket-client=1.9.0=pyhd8ed1ab_0
   - wheel=0.45.1=py313haa95532_0
   - win_inet_pton=1.1.0=py313haa95532_0
+  - wsproto=1.2.0=pyhd8ed1ab_1
   - xz=5.6.4=h4754444_1
   - yarl=1.22.0=py313hd650c13_0
   - zlib=1.3.1=h02ab6af_0
+  - pip:
+      - packaging==25.0
+      - python-dotenv==1.2.1
+      - webdriver-manager==4.0.2
 prefix: C:\Users\Administrator\.conda\envs\first-spider
