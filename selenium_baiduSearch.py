@@ -1,3 +1,5 @@
+import os
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -13,7 +15,7 @@ chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
 chrome_options.add_experimental_option('useAutomationExtension', False)
 
 # === 启动浏览器 ===
-chromedriver_path = r"D:\PythonProject\practice-spider\chromedriver.exe"
+chromedriver_path =  r"D:\PythonProject\practice-spider\chromedriver.exe"
 service = Service(executable_path=chromedriver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
