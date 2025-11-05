@@ -7,6 +7,33 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+import dashscope #阿里云SDK
+from dashscope import Generation
+
+# 阿里云 API 密钥
+dashscope_api_key = os.getenv("DASHSCOPE_API_KEY")# 获取阿里云 API 密钥（环境变量形式）
+
+# 阿里云 QWEN 模型
+def summarize_with_qwen(titles):
+    prompt = (
+        "以下是关于“Selenium 爬虫”的一些搜索结果标题，请用中文总结这些标题反映的核心内容、常见问题或技术趋势，"
+        "要求简洁、有条理，不超过150字：\n\n" + "\n".join(f"- {title}" for title in titles)
+    )
+
+    try:
+        response = Generation.call(
+            model="qwen-max",  # 也可以用 qwen-plus、qwen-turbo
+            prompt=prompt
+        )
+        if response.status_code == 200:
+            return response.output.text.strip()
+        else:
+            print("❌ AI 调用失败:", response)
+            return "AI 总结失败"
+    except Exception as e:
+        print("❌ 调用异常:", e)
+        return "AI 调用异常"
+
 # === 配置 Chrome 选项 ===
 chrome_options = Options()
 # 禁用自动化标志（重要！）
@@ -21,6 +48,8 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 绕过 webdriver 检测（关键 JS）
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
+titles_list = [] # 用于存储标题
 
 try:
     driver.get("https://www.baidu.com")
@@ -66,6 +95,18 @@ try:
         print(f"标题: {title_text}")
         print(f"链接: {link_url}")
         print("-" * 50)
+
+        title_text = result.text.strip()
+        if title_text:
+            titles_list.append(title_text)
+
+    if titles_list:
+        print("\n🧠 正在调用 AI 进行总结...")
+        summary = summarize_with_qwen(titles_list)
+        print("\n✅ AI 总结结果：")
+        print(summary)
+    else:
+        print("⚠️ 未获取到任何标题，无法总结。")
 
 
 finally:
