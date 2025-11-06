@@ -111,14 +111,14 @@ try:
     print("-" * 50)
     print("\n".join(titles_list))
 
-    # # === AI 总结 ===
-    # if titles_list:
-    #     print("\n🧠 正在调用 AI 进行总结...")
-    #     summary = summarize_with_qwen(titles_list)
-    #     print("\n✅ AI 总结结果：")
-    #     print(summary)
-    # else:
-    #     print("⚠️ 未获取到任何标题，无法总结。")
+    # === AI 总结 ===
+    if titles_list:
+        print("\n🧠 正在调用 AI 进行总结...")
+        summary = summarize_with_qwen(titles_list)
+        print("\n✅ AI 总结结果：")
+        print(summary)
+    else:
+        print("⚠️ 未获取到任何标题，无法总结。")
 
 finally:
     driver.quit()
