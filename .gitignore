@@ -30,3 +30,17 @@ tmp/
 # 6. 操作系统文件
 .DS_Store          # macOS
 Thumbs.db          # Windows
+
+# auto-added ignore rules
+.vscode/
+.vs/
+*.suo
+*.user
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
